@@ -1,0 +1,24 @@
+/* GLOBAL STYLES */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    font-family: 'Poppins', sans-serif;
+
+    background-color: #EB6440;
+    background-image: url('assets/ChristmasPattern.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+}
+
+.container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 25px;
+}
