@@ -37,12 +37,10 @@ function persistItem(item) {
 
 function addItem(item) {
     // add the element to the page
+    // (the new element is animated in CSS)
     const newElement = document.createElement('li');
     newElement.textContent = item;
     giftList.appendChild(newElement);
-
-    // the new element is animated in CSS
-
 }
 
 function initializeList() {
