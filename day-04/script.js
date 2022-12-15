@@ -22,7 +22,6 @@ form.addEventListener("submit", e => {
     }
     
     addItem(gift.value); 
-
     storeItem(gift.value);
     gift.value = "";  
 } );
@@ -38,7 +37,7 @@ giftList.addEventListener("click", (event) => {
 // FUNCTIONS
 
 function storeItem(item) {
-    listOfGifts.push(item);
+    listOfGifts = [...listOfGifts, item];
 }
 
 function deleteItemFromStorage(item) {
