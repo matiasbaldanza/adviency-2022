@@ -1,3 +1,11 @@
+// MOCK DATA
+
+let listOfGifts = [ 
+    'Hub Thunderbolt nuevo', 
+    'Luces para el stream',  
+    'Soporte para la cámara',
+];
+
 // SELECT ITEMS
 const giftList = document.querySelector(".gift-list");
 const form = document.querySelector(".gift-list-form");
@@ -24,28 +32,18 @@ giftList.addEventListener("click", (event) => {
     event.target.remove();
 
     // remove from storage
-    deleteItemFromStorage(event.target.textContent);
+    listOfGifts = deleteItemFromStorage(event.target.textContent);
 })
-
-// MOCK DATA
-
-const listOfGifts = [ 
-    'Hub Thunderbolt nuevo', 
-    'Luces para el stream',  
-    'Soporte para la cámara',
-];
 
 // FUNCTIONS
 
 function storeItem(item) {
     listOfGifts.push(item);
-    console.log(listOfGifts);
 }
 
 function deleteItemFromStorage(item) {
     const itemIndex = listOfGifts.indexOf(item);
-    listOfGifts.splice(itemIndex, 1);
-    console.log(listOfGifts)
+    return listOfGifts.filter(e => e !== item);
 }
 
 function addItem(item) {
@@ -65,8 +63,3 @@ function initializeList() {
 
 initializeList();
 
-
-// create toolbar "delete"
-// add event to delete button
-
-// show the toolbar on hover
