@@ -14,6 +14,7 @@ form.addEventListener("submit", e => {
     }
     
     addItem(gift.value); 
+
     persistItem(gift.value);
     gift.value = "";  
 } );
@@ -35,9 +36,13 @@ function persistItem(item) {
 }
 
 function addItem(item) {
+    // add the element to the page
     const newElement = document.createElement('li');
     newElement.textContent = item;
     giftList.appendChild(newElement);
+
+    // the new element is animated in CSS
+
 }
 
 function initializeList() {

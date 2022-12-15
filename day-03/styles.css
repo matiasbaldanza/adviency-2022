@@ -59,6 +59,37 @@
     border-width: 0 !important;
   }
 
+/* ANIMATIONS */
+
+.shake {
+    animation: shake-animation 4.72s ease infinite;
+    transform-origin: 50% 50%;
+  }
+  
+  @keyframes shake-animation {
+      0% { transform:translate(0,0) }
+     1.78571% { transform:translate(5px,0) }
+     3.57143% { transform:translate(0,0) }
+     5.35714% { transform:translate(5px,0) }
+     7.14286% { transform:translate(0,0) }
+     8.92857% { transform:translate(5px,0) }
+     10.71429% { transform:translate(0,0) }
+     100% { transform:translate(0,0) }
+   }
+
+
+.pop-in {
+    animation: show 0.3s ease-in;
+}
+
+@keyframes show { 
+    from { 
+        opacity: 0; transform: translateY(-3rem); 
+    } to { 
+        opacity: 1; transform: translateY(0px); 
+    } 
+}
+
 /* STYLES */
 
 body {
@@ -112,15 +143,19 @@ h1 {
     line-height: 3rem;
 }
 
-.container li:nth-child(odd) {
+.gift-list li:nth-child(odd) {
     background-color: rgba(var(--color-yellow));
 }
 
-.container li:nth-child(even) {
+.gift-list li:nth-child(even) {
     background-color: rgba(var(--color-yellow), 0.5);
 }
 
-.container li:hover {
+.gift-list li:last-child {
+    animation: show 0.3s ease-in;
+}
+
+.gift-list li:hover {
     background-color: var(--color-green2);
     color: white;
     transition: background-color 0.2s;
@@ -172,19 +207,5 @@ h1 {
     /* TODO: Can I animate this with a transition? */
 }
 
-.shake {
-  animation: shake-animation 4.72s ease infinite;
-  transform-origin: 50% 50%;
-}
 
-@keyframes shake-animation {
-    0% { transform:translate(0,0) }
-   1.78571% { transform:translate(5px,0) }
-   3.57143% { transform:translate(0,0) }
-   5.35714% { transform:translate(5px,0) }
-   7.14286% { transform:translate(0,0) }
-   8.92857% { transform:translate(5px,0) }
-   10.71429% { transform:translate(0,0) }
-   100% { transform:translate(0,0) }
- }
 
