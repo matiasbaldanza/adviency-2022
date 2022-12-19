@@ -30,6 +30,8 @@ form.addEventListener("submit", e => {
         addItem(gift.value); 
         storeItem(gift.value);
         gift.value = "";  
+    } else {
+        showMsgGiftAlreadyExists();
     }
 } );
 

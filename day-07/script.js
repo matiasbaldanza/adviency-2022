@@ -18,13 +18,15 @@ const msgEmptyList = document.querySelector("#msg-empty");
 form.addEventListener("submit", e => {
     e.preventDefault();
     
+     // VALIDATION: If text is empty, notify user
     if (gift.value === "") {
         form.classList.add("shake");
         setTimeout(() => { form.classList.remove("shake") }, 500);
-    }
+    } else if (giftIndex(gift.value) === -1) {
+        // Hide the Empty List message if adding the first element
+        if (listOfGifts.length === 0) hideMsgEmptyList();
 
-    console.log(giftIndex(gift.value));
-    if (giftIndex(gift.value) === -1) {
+        // Add gift to list
         addItem(gift.value); 
         storeItem(gift.value);
         gift.value = "";  
@@ -91,6 +93,14 @@ function addItem(item) {
 
 function giftExists(gift) {
     return listOfGifts.indexOf(gift);
+}
+
+function showMsgEmptyList() {
+    msgEmptyList.classList.remove("hidden");
+}
+
+function hideMsgEmptyList() {
+    msgEmptyList.classList.add("hidden");
 }
 
 function initializeList() {
