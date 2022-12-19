@@ -18,14 +18,15 @@ const msgEmptyList = document.querySelector("#msg-empty");
 form.addEventListener("submit", e => {
     e.preventDefault();
     
+    // VALIDATION: If text is empty, notify user
     if (gift.value === "") {
         form.classList.add("shake");
         setTimeout(() => { form.classList.remove("shake") }, 500);
+    } else {
+        addItem(gift.value); 
+        storeItem(gift.value);
+        gift.value = "";  
     }
-    
-    addItem(gift.value); 
-    storeItem(gift.value);
-    gift.value = "";  
 } );
 
 giftList.addEventListener("click", (event) => {
@@ -73,6 +74,10 @@ function addItem(item) {
 
 function showMsgEmptyList() {
     msgEmptyList.classList.remove("hidden");
+}
+
+function hideMsgEmptyList() {
+    msgEmptyList.classList.add("hidden");
 }
 
 function initializeList() {
