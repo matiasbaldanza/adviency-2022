@@ -17,20 +17,24 @@ const msgEmptyList = document.querySelector("#msg-empty");
 
 form.addEventListener("submit", e => {
     e.preventDefault();
+    const newGift = gift.value;
     
      // VALIDATION: If text is empty, notify user
-    if (gift.value.trim() === "") {
+    if (newGift.trim() === "") {
         applyAnimation(form, "shake", 500);
-    } else if (giftIndex(gift.value) === -1) {
+    } else if (giftIndex(newGift) === -1) {
         // Hide the Empty List message if adding the first element
         if (listOfGifts.length === 0) hideMsgEmptyList();
 
         // Add gift to list
-        addItem(gift.value); 
-        storeItem(gift.value);
+        addItem(newGift); 
+        storeItem(newGift);
+
+        // Clear the form
         gift.value = "";  
     } else {
-        showMsgGiftAlreadyExists(giftIndex(gift.value));
+        // Notify user that gift already exists
+        showMsgGiftAlreadyExists(giftIndex(newGift));
     }
     
 } );
