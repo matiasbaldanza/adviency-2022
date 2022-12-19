@@ -23,6 +23,10 @@ form.addEventListener("submit", e => {
         form.classList.add("shake");
         setTimeout(() => { form.classList.remove("shake") }, 500);
     } else {
+        // Hide the Empty List message if adding the first element
+        if (listOfGifts.length === 0) hideMsgEmptyList();
+
+        // Add gift to list
         addItem(gift.value); 
         storeItem(gift.value);
         gift.value = "";  
