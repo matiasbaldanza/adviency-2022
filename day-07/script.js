@@ -1,7 +1,7 @@
 // MOCK DATA
 
 let listOfGifts = [ 
-    'Hub Thunderbolt nuevo', 
+    'Hub Thunderbolt nuevo   ', 
     'Luces para el stream',  
     'Soporte para la cámara',
 ];
@@ -19,7 +19,7 @@ form.addEventListener("submit", e => {
     e.preventDefault();
     
      // VALIDATION: If text is empty, notify user
-    if (gift.value === "") {
+    if (gift.value.trim() === "") {
         form.classList.add("shake");
         setTimeout(() => { form.classList.remove("shake") }, 500);
     } else if (giftIndex(gift.value) === -1) {
@@ -68,7 +68,12 @@ btnDeleteAll.addEventListener("click", (event) => {
 
 // UTILITIES
 
-const normalizeString = (string) => { return string.toLowerCase() };
+const normalizeString = (string) => { 
+    return string
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, ' ');
+};
 
 // FUNCTIONS
 
