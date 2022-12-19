@@ -20,8 +20,7 @@ form.addEventListener("submit", e => {
     
      // VALIDATION: If text is empty, notify user
     if (gift.value.trim() === "") {
-        form.classList.add("shake");
-        setTimeout(() => { form.classList.remove("shake") }, 500);
+        applyAnimation(form, "shake", 500);
     } else if (giftIndex(gift.value) === -1) {
         // Hide the Empty List message if adding the first element
         if (listOfGifts.length === 0) hideMsgEmptyList();
@@ -42,13 +41,11 @@ function giftIndex(gift) {
 
 function showMsgGiftAlreadyExists(index) {
     // Mensaje al usuario
-    form.classList.add("shake");
-    setTimeout(() => { form.classList.remove("shake") }, 500);
+    applyAnimation(form, "shake", 500);
 
     // Destacar el regalo si está visible por unos segundos
-    giftList.children[index].classList.add("warning-red-highlight");
-    setTimeout(() => { giftList.children[index].classList.remove("warning-red-highlight") }, 2000);
-    
+    applyAnimation(giftList.children[index], "warning-red-highlight", 2000);
+        
     /* alert("Ya agregaste ese regalo"); */
 }
 
@@ -82,6 +79,11 @@ const normalizeString = (string) => {
             .trim()
             .replace(/\s+/g, ' ');
 };
+
+const applyAnimation = (element, animationClass, timeout) => {
+    element.classList.add(animationClass);
+    setTimeout(() => { element.classList.remove(animationClass) }, timeout);
+}
 
 // FUNCTIONS
 
