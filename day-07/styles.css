@@ -183,6 +183,12 @@ h1 {
     cursor: pointer;
 }
 
+.warning-red-highlight {
+    background-color: var(--color-red) !important;
+    transition: 0.5s ease-in;
+    color: white;
+}
+
 #decoration-top {
     position: absolute;
     top: -100px;

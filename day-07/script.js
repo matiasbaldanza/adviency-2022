@@ -31,7 +31,7 @@ form.addEventListener("submit", e => {
         storeItem(gift.value);
         gift.value = "";  
     } else {
-        showMsgGiftAlreadyExists();
+        showMsgGiftAlreadyExists(giftIndex(gift.value));
     }
     
 } );
@@ -40,8 +40,16 @@ function giftIndex(gift) {
     return listOfGifts.findIndex(element => normalizeString(element) === normalizeString(gift)); 
 }
 
-function showMsgGiftAlreadyExists() {
-    alert("Ya agregaste ese regalo");
+function showMsgGiftAlreadyExists(index) {
+    // Mensaje al usuario
+    form.classList.add("shake");
+    setTimeout(() => { form.classList.remove("shake") }, 500);
+
+    // Destacar el regalo si está visible por unos segundos
+    giftList.children[index].classList.add("warning-red-highlight");
+    setTimeout(() => { giftList.children[index].classList.remove("warning-red-highlight") }, 2000);
+    
+    /* alert("Ya agregaste ese regalo"); */
 }
 
 giftList.addEventListener("click", (event) => {
