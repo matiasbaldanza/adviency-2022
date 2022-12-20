@@ -40,7 +40,12 @@ form.addEventListener("submit", e => {
 } );
 
 function giftIndex(gift) {
-    return listOfGifts.findIndex(element => normalizeString(element) === normalizeString(gift)); 
+    /* return listOfGifts.findIndex(element => normalizeString(element) === normalizeString(gift));  */
+    return listOfGifts.findIndex(element => 
+        normalizeString(element)
+            .localeCompare(normalizeString(gift), 
+                            'default', { sensitivity: 'base', ignorepunctuation: true }) === 0
+        ); 
 }
 
 function showMsgGiftAlreadyExists(index) {
