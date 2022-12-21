@@ -69,8 +69,12 @@ giftList.addEventListener("click", (event) => {
     // remove from storage
     deleteItemFromStorage(event.target.firstChild.textContent);
 
-    if (listOfGifts.length === 0) showMsgEmptyList();
+    if (isGiftListEmpty()) showMsgEmptyList();
 })
+
+function isGiftListEmpty() {
+    return listOfGifts.size === 0;
+}
 
 btnDeleteAll.addEventListener("click", (event) => {
     // remove all elements from the page
@@ -139,7 +143,7 @@ function hideMsgEmptyList() {
 }
 
 function initializeList() {
-    if (listOfGifts.length === 0) { 
+    if (isGiftListEmpty()) { 
         showMsgEmptyList();
     } else {
         listOfGifts.forEach((giftQty, giftName) => { addItem(giftName, giftQty) });
@@ -152,6 +156,7 @@ initializeList();
 
 TODO: After adding a gift, the focus should return to the text input
 TODO: Adding a repeated gift should increment the QTY by the QTY input
+TODO: Access form on submit using FormData instead of accessing individual inputs
 TODO: Day 9: LocalStorage
 
 */
