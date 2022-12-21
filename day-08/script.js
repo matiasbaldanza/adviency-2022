@@ -32,8 +32,10 @@ form.addEventListener("submit", e => {
         addItem(newGiftName, newGiftQty); 
         storeItem(newGiftName, newGiftQty);
 
-        // Clear the form
-        form.reset();  
+        // Clear the form and return focus to first input
+        form.reset(); 
+        form.firstElementChild.focus({focusVisible: true});
+
     } /* else {
         // Notify user that gift already exists
         showMsgGiftAlreadyExists(giftIndex(newGift));
@@ -154,7 +156,6 @@ initializeList();
 
 /* 
 
-TODO: After adding a gift, the focus should return to the text input
 TODO: Adding a repeated gift should increment the QTY by the QTY input
 TODO: Access form on submit using FormData instead of accessing individual inputs
 TODO: Day 9: LocalStorage
