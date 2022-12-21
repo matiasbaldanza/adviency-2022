@@ -26,7 +26,7 @@ form.addEventListener("submit", e => {
         applyAnimation(form, "shake", 500);
     } else /* if (giftIndex(newGift) === -1) */ {
         // Hide the Empty List message if adding the first element
-        if (listOfGifts.length === 0) hideMsgEmptyList();
+        if (isGiftListEmpty()) hideMsgEmptyList();
 
         // Add gift to list
         addItem(newGiftName, newGiftQty); 
@@ -58,8 +58,6 @@ function showMsgGiftAlreadyExists(index) {
 
     // Destacar el regalo si está visible por unos segundos
     applyAnimation(giftList.children[index], "warning-red-highlight", 2000);
-        
-    /* alert("Ya agregaste ese regalo"); */
 }
 
 
