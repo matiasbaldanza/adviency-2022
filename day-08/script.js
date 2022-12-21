@@ -33,7 +33,7 @@ form.addEventListener("submit", e => {
         storeItem(newGiftName, newGiftQty);
 
         // Clear the form
-        giftName.value = "";  
+        form.reset();  
     } /* else {
         // Notify user that gift already exists
         showMsgGiftAlreadyExists(giftIndex(newGift));
@@ -148,3 +148,10 @@ function initializeList() {
 
 initializeList();
 
+/* 
+
+TODO: After adding a gift, the focus should return to the text input
+TODO: Adding a repeated gift should increment the QTY by the QTY input
+TODO: Day 9: LocalStorage
+
+*/
