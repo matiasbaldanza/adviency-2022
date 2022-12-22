@@ -189,6 +189,12 @@ h1 {
     color: white;
 }
 
+.update-green-highlight {
+    background-color: var(--color-green2) !important;
+    transition: 0.5s ease-in;
+    color: white;
+}
+
 #decoration-top {
     position: absolute;
     top: -100px;

@@ -21,16 +21,33 @@ form.addEventListener("submit", e => {
     const newGiftName = giftName.value;
     const newGiftQty = parseInt(giftQty.value);
     
-     // VALIDATION: If text is empty, notify user
+    // VALIDATION: If text is empty, notify user
     if (newGiftName.trim() === "") {
         applyAnimation(form, "shake", 500);
     } else {
         // Hide the Empty List message if adding the first element
         if (isGiftListEmpty()) hideMsgEmptyList();
+        
+        const giftToUpdate = findGiftOnList(newGiftName);
 
-        // Add gift to list
-        showItem(newGiftName, newGiftQty);      
-        storeItem(newGiftName, newGiftQty);     // Handles append or increment
+        // If gift is not on the list, append to list
+        if (giftToUpdate == undefined) {
+            addItemToList(newGiftName, newGiftQty);
+        } else {
+            // calculate the new Quantity
+            // TODO: replace manual calculation from a FETCH from storage
+            const currentQty = parseInt(giftToUpdate.childNodes[1].textContent.match(/\d+/)[0], 10);
+
+            // update the Quantity on the list 
+            // TODO: this formatting of the <span> SHOULD NOT BE HARDCODED
+            giftToUpdate.childNodes[1].textContent = ` (${currentQty + newGiftQty})`;
+
+            // animar elemento
+            applyAnimation(giftToUpdate, "update-green-highlight", 2000)
+        }
+
+        // Update storage
+        storeItem(newGiftName, newGiftQty);  // Handles append or increment
 
         // Clear the form and return focus to first input
         form.reset(); 
@@ -107,6 +124,18 @@ const applyAnimation = (element, animationClass, timeout) => {
 
 // FUNCTIONS
 
+const textContentWithoutChildren = (element) => element.childNodes[0].textContent;
+
+function findGiftOnList(giftName) {
+    const giftsOnList = [...giftList.children];
+
+    return giftsOnList.find(element => 
+        cleanWhitespace(textContentWithoutChildren(element))
+            .localeCompare(cleanWhitespace(giftName), 
+                            'default', { sensitivity: 'base', ignorepunctuation: true }) === 0
+        );
+}
+
 function storeItem(itemName, itemQty = 1) {
     let found = false;
     listOfGifts.forEach( (value, key) => {
@@ -127,7 +156,7 @@ function deleteItemFromStorage(itemName) {
     listOfGifts.delete(itemName);
 }
 
-function showItem(itemName, itemQty = 1) {
+function addItemToList(itemName, itemQty = 1) {
     // add the element to the page with its name
     // append a <span> to include additional info (quantity)
     // the new element is animated in CSS
@@ -145,10 +174,6 @@ function showItem(itemName, itemQty = 1) {
     giftList.appendChild(newElement);
 }
 
-function giftExists(gift) {
-    return listOfGifts.indexOf(gift);
-}
-
 function showMsgEmptyList() {
     msgEmptyList.classList.remove("hidden");
 }
@@ -161,7 +186,7 @@ function showList() {
     if (isGiftListEmpty()) { 
         showMsgEmptyList();
     } else {
-        listOfGifts.forEach((giftQty, giftName) => { showItem(giftName, giftQty) });
+        listOfGifts.forEach((giftQty, giftName) => { addItemToList(giftName, giftQty) });
     }
 }
 
