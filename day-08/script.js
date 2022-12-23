@@ -7,12 +7,17 @@ let listOfGifts = new Map ([
 ]);
 
 // SELECT ITEMS
-const giftList = document.querySelector(".gift-list");
+// 1. FORM
 const form = document.querySelector(".gift-list-form");
 const giftName = document.querySelector("#input-gift");
 const giftQty = document.querySelector("#input-qty");
-const btnDeleteAll = document.querySelector("#btn-delete-all");
+
+// 2. LIST
+const giftList = document.querySelector(".gift-list");
 const msgEmptyList = document.querySelector("#msg-empty");
+
+// 3. BUTTONS
+const btnDeleteAll = document.querySelector("#btn-delete-all");
 
 // EVENT LISTENERS
 
@@ -56,24 +61,6 @@ form.addEventListener("submit", e => {
     
 } );
 
-function giftIndex(gift) {
-    // comparison strips additional whitespace and takes into account locale versions of characters using localeCompare
-    return listOfGifts.findIndex(element => 
-        cleanWhitespace(element)
-            .localeCompare(cleanWhitespace(gift), 
-                            'default', { sensitivity: 'base', ignorepunctuation: true }) === 0
-        ); 
-}
-
-function showMsgGiftAlreadyExists(index) {
-    // Mensaje al usuario
-    applyAnimation(form, "shake", 500);
-
-    // Destacar el regalo si está visible por unos segundos
-    applyAnimation(giftList.children[index], "warning-red-highlight", 2000);
-}
-
-
 // If an item is clicked => REMOVE item
 giftList.addEventListener("click", (event) => {
     // remove from the list
@@ -85,9 +72,6 @@ giftList.addEventListener("click", (event) => {
     if (isGiftListEmpty()) showMsgEmptyList();
 })
 
-function isGiftListEmpty() {
-    return listOfGifts.size === 0;
-}
 
 btnDeleteAll.addEventListener("click", (event) => {
     // remove all elements from the page
@@ -122,9 +106,11 @@ const applyAnimation = (element, animationClass, timeout) => {
     setTimeout(() => { element.classList.remove(animationClass) }, timeout);
 }
 
-// FUNCTIONS
-
 const textContentWithoutChildren = (element) => element.childNodes[0].textContent;
+
+const isGiftListEmpty = () => listOfGifts.size === 0;
+
+// FUNCTIONS
 
 function findGiftOnList(giftName) {
     const giftsOnList = [...giftList.children];
@@ -194,8 +180,12 @@ showList();
 
 /* 
 
-TODO: Adding a repeated gift should increment the QTY by the QTY input
+TODO: Organize functions
+TODO: Extract utility functions as constants
+TODO: Modularize
 TODO: Access form on submit using FormData instead of accessing individual inputs
+TODO: WebComponents?
+TODO: E2E Testing with Cypress
 TODO: Day 9: LocalStorage
 
 */
