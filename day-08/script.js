@@ -110,7 +110,10 @@ const textContentWithoutChildren = (element) => element.childNodes[0].textConten
 
 const isGiftListEmpty = () => listOfGifts.size === 0;
 
-// FUNCTIONS
+// PRESENTATION
+
+const showMsgEmptyList = () => msgEmptyList.classList.remove("hidden");
+const hideMsgEmptyList = () => msgEmptyList.classList.add("hidden");
 
 function findGiftOnList(giftName) {
     const giftsOnList = [...giftList.children];
@@ -121,6 +124,34 @@ function findGiftOnList(giftName) {
                             'default', { sensitivity: 'base', ignorepunctuation: true }) === 0
         );
 }
+
+function addItemToList(itemName, itemQty = 1) {
+    // add the element to the page with its name
+    // append a <span> to include additional info (quantity)
+    // the new element is animated in CSS
+    
+    const newElement = document.createElement('li');
+    newElement.textContent = `${itemName}`;
+    
+    const newElementSpan = document.createElement('span');
+    newElementSpan.classList.add('gift-info');
+    newElementSpan.textContent = ` (${itemQty})`;
+
+    newElement.appendChild(newElementSpan);
+
+    // display new element in the list
+    giftList.appendChild(newElement);
+}
+
+function showList() {
+    if (isGiftListEmpty()) { 
+        showMsgEmptyList();
+    } else {
+        listOfGifts.forEach((giftQty, giftName) => { addItemToList(giftName, giftQty) });
+    }
+}
+
+// STORAGE
 
 function storeItem(itemName, itemQty = 1) {
     let found = false;
@@ -142,46 +173,10 @@ function deleteItemFromStorage(itemName) {
     listOfGifts.delete(itemName);
 }
 
-function addItemToList(itemName, itemQty = 1) {
-    // add the element to the page with its name
-    // append a <span> to include additional info (quantity)
-    // the new element is animated in CSS
-    
-    const newElement = document.createElement('li');
-    newElement.textContent = `${itemName}`;
-    
-    const newElementSpan = document.createElement('span');
-    newElementSpan.classList.add('gift-info');
-    newElementSpan.textContent = ` (${itemQty})`;
-
-    newElement.appendChild(newElementSpan);
-
-    // display new element in the list
-    giftList.appendChild(newElement);
-}
-
-function showMsgEmptyList() {
-    msgEmptyList.classList.remove("hidden");
-}
-
-function hideMsgEmptyList() {
-    msgEmptyList.classList.add("hidden");
-}
-
-function showList() {
-    if (isGiftListEmpty()) { 
-        showMsgEmptyList();
-    } else {
-        listOfGifts.forEach((giftQty, giftName) => { addItemToList(giftName, giftQty) });
-    }
-}
-
 showList();
 
 /* 
 
-TODO: Organize functions
-TODO: Extract utility functions as constants
 TODO: Modularize
 TODO: Access form on submit using FormData instead of accessing individual inputs
 TODO: WebComponents?
