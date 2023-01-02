@@ -1,10 +1,5 @@
-// MOCK DATA
-
-let listOfGifts = new Map ([ 
-    ['Hub Thunderbolt nuevo',  1],
-    ['Luces para el stream',   1],
-    ['Soporte para la cámara', 1]
-]);
+import { cleanWhitespace, stringsEqual, applyAnimation, textContentWithoutChildren } from "./imports/utilities.js";
+import { storeItem, deleteItemFromStorage, isStorageEmpty, readAllStorage, deleteAllStorage } from "./imports/storage.js"
 
 // SELECT ITEMS
 // 1. FORM
@@ -19,6 +14,9 @@ const msgEmptyList = document.querySelector("#msg-empty");
 // 3. BUTTONS
 const btnDeleteAll = document.querySelector("#btn-delete-all");
 
+// 4. STATE
+const copyOfStorage = readAllStorage();
+
 // EVENT LISTENERS
 
 form.addEventListener("submit", e => {
@@ -31,7 +29,7 @@ form.addEventListener("submit", e => {
         applyAnimation(form, "shake", 500);
     } else {
         // Hide the Empty List message if adding the first element
-        if (isGiftListEmpty()) hideMsgEmptyList();
+        if (isStorageEmpty()) hideMsgEmptyList();
         
         const giftToUpdate = findGiftOnList(newGiftName);
 
@@ -55,7 +53,7 @@ form.addEventListener("submit", e => {
         storeItem(newGiftName, newGiftQty);  // Handles append or increment
 
         // Clear the form and return focus to first input
-        form.reset(); 
+        form.reset(); console.log("FORM RESET")
         form.firstElementChild.focus({focusVisible: true});
     } 
     
@@ -64,51 +62,30 @@ form.addEventListener("submit", e => {
 // If an item is clicked => REMOVE item
 giftList.addEventListener("click", (event) => {
     // remove from the list
-    event.target.remove();
+    let element = event.target;
+
+    // find the list item that was clicked
+    while (!element.classList.contains("list-item")) {
+        element = element.parentNode;
+    }
+    // remove list item from the list
+    element.remove();
 
     // remove from storage
     deleteItemFromStorage(event.target.firstChild.textContent);
 
-    if (isGiftListEmpty()) showMsgEmptyList();
+    if (isStorageEmpty()) showMsgEmptyList();
 })
 
 
 btnDeleteAll.addEventListener("click", (event) => {
     // remove all elements from the page
-    while (giftList.lastChild) {
-        giftList.lastChild.remove();
-    }
+    while (giftList.lastChild) { giftList.lastChild.remove(); }
 
-    // remove all elements from storage (array)
-    listOfGifts.clear();
+    deleteAllStorage();
 
     showMsgEmptyList();
 });
-
-// UTILITIES
-
-const cleanWhitespace = (string) => { 
-    return string
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, ' ');
-};
-
-const stringsEqual = (string1, string2) => {
-    return cleanWhitespace(string1)
-            .localeCompare(cleanWhitespace(string2), 
-                            'default', { sensitivity: 'base', ignorepunctuation: true }) 
-            === 0;
-}
-
-const applyAnimation = (element, animationClass, timeout) => {
-    element.classList.add(animationClass);
-    setTimeout(() => { element.classList.remove(animationClass) }, timeout);
-}
-
-const textContentWithoutChildren = (element) => element.childNodes[0].textContent;
-
-const isGiftListEmpty = () => listOfGifts.size === 0;
 
 // PRESENTATION
 
@@ -132,6 +109,7 @@ function addItemToList(itemName, itemQty = 1) {
     
     const newElement = document.createElement('li');
     newElement.textContent = `${itemName}`;
+    newElement.classList.add("list-item");
     
     const newElementSpan = document.createElement('span');
     newElementSpan.classList.add('gift-info');
@@ -143,42 +121,20 @@ function addItemToList(itemName, itemQty = 1) {
     giftList.appendChild(newElement);
 }
 
-function showList() {
-    if (isGiftListEmpty()) { 
+function showList(list) {
+    if (isStorageEmpty()) { 
         showMsgEmptyList();
     } else {
-        listOfGifts.forEach((giftQty, giftName) => { addItemToList(giftName, giftQty) });
+        list.forEach((giftQty, giftName) => { addItemToList(giftName, giftQty) });
     }
 }
 
-// STORAGE
-
-function storeItem(itemName, itemQty = 1) {
-    let found = false;
-    listOfGifts.forEach( (value, key) => {
-        // If found, increment the quantity
-        if (stringsEqual(key, itemName)) {
-            found = true;
-            listOfGifts.set(key, value + itemQty);
-        }
-    } );    
-
-    // If not found, append to the list
-    if (!found) { 
-        listOfGifts.set(itemName, itemQty);
-    }
-}
-
-function deleteItemFromStorage(itemName) {
-    listOfGifts.delete(itemName);
-}
-
-showList();
+showList(copyOfStorage);
 
 /* 
 
-TODO: Access form on submit using FormData instead of accessing individual inputs
 TODO: Modularize
+TODO: Access form on submit using FormData instead of accessing individual inputs
 TODO: WebComponents? ShadowDom? How to handle CSS.
 TODO: E2E Testing with Cypress
 TODO: Day 9: LocalStorage

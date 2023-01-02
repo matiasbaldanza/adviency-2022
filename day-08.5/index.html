@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Adviency 2022 - @MatiasBaldanza - Day 2</title>
+</head>
+<body>
+    <div class="container">
+        <img id="decoration-top" src="assets/santa-hat-001.svg" alt="Santa's Hat decoration">
+        <h1>Lista de regalos</h1>
+        
+        <!-- FORM -->
+        <form class="gift-list-form" action="submit" >
+            <label for="input-gift" class="sr-only">Regalo:</label>
+            <input id="input-gift" type="text" placeholder="Agregue el regalo aquí..." autocomplete="off" autofocus>
+            <label for="input-qty" class="sr-only">Cantidad</label>
+            <input id="input-qty" type="number" value="1" min="1" max="99">
+            <button id="submit-gift" class="btn" type="submit">
+                Enviar
+            </button>
+        </form>
+
+        <!-- GIFT LIST -->
+        <p class="message hidden" id="msg-empty">No hay regalos, Grinch! Agregá algo! :-)</p>
+        <ul class="gift-list">
+            <!-- List is populated in JS -->
+        </ul>
+        
+        <!-- BOTTOM CONTROLS -->
+        
+        <button id="btn-delete-all" class="btn" >Eliminar todos</button>
+    </div>
+    
+    <!-- SCRIPTS -->
+    <script src="script.js" type="module"></script>
+</body>
+</html>
